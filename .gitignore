@@ -31,6 +31,9 @@ yarn-error.log*
 .env.local
 .env.*.local
 
+# npm
+.npmrc
+
 # Temporary files
 tmp/
 temp/
