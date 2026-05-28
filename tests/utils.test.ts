@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { formatBytes, formatPercent, drawProgressBar } from '../src/utils.js';
+import { describe, it, expect } from '@jest/globals';
+import { formatBytes, formatPercent, drawProgressBar } from '../src/utils';
 
 describe('formatBytes', () => {
   it('formats 0 bytes correctly', () => {

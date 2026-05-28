@@ -4,7 +4,7 @@
 import blessed from 'blessed';
 import chalk from 'chalk';
 import { DockerClient } from './docker.js';
-import { formatBytes, formatPercent, filterContainers, sortContainers, drawProgressBar } from './utils.js';
+import { formatBytes, formatPercent, filterContainers, sortContainers } from './utils.js';
 import type { ContainerInfo, DashboardConfig, FilterOptions, ExportOptions, StatsSnapshot } from './types.js';
 
 export async function startDashboard(client: DockerClient, config: DashboardConfig): Promise<void> {
@@ -101,7 +101,7 @@ export async function startDashboard(client: DockerClient, config: DashboardConf
       );
 
       // Update list
-      const items = containers.map((c, i) => {
+      const items = containers.map((c) => {
         const statusColor = c.state === 'running' ? '{green-fg}' : c.state === 'exited' ? '{red-fg}' : '{yellow-fg}';
         return `${statusColor}${c.name}{/${statusColor === '{green-fg}' ? 'green-fg' : statusColor === '{red-fg}' ? 'red-fg' : 'yellow-fg'}} (${c.state})`;
       });
@@ -215,7 +215,7 @@ export async function startDashboard(client: DockerClient, config: DashboardConf
   });
 
   // Container list selection
-  containerList.on('select', (item: any) => {
+  containerList.on('select', (item: blessed.Widgets.ListElement) => {
     // Find which item was selected by comparing with our container list
     for (let i = 0; i < containers.length; i++) {
       const c = containers[i];

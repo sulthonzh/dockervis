@@ -1,22 +1,26 @@
 {
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "eslint:recommended",
-    "plugin:@typescript-eslint/recommended"
+    "@typescript-eslint/recommended"
   ],
-  "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "parserOptions": {
-    "ecmaVersion": 2022,
+    "ecmaVersion": 2020,
     "sourceType": "module"
   },
   "env": {
     "node": true,
-    "es2022": true
+    "es6": true,
+    "jest": true
   },
   "rules": {
-    "@typescript-eslint/no-explicit-any": "error",
-    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-    "no-console": "off"
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-non-null-assertion": "warn",
+    "prefer-const": "error",
+    "no-var": "error"
   },
-  "ignorePatterns": ["dist", "node_modules", "*.config.js"]
+  "ignorePatterns": ["dist/", "node_modules/"]
 }

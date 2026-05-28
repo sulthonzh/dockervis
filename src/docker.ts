@@ -2,12 +2,15 @@
  * Docker API wrapper for container operations
  */
 import Docker from 'dockerode';
+import { Logger } from './logger';
 import type { ContainerInfo, DockerOptions } from './types.js';
 
 export class DockerClient {
-  private docker: Docker;
+  protected docker: Docker;
+  protected logger: Logger;
 
   constructor(options: DockerOptions = {}) {
+    this.logger = new Logger();
     this.docker = new Docker(options);
   }
 
@@ -61,7 +64,7 @@ export class DockerClient {
       let networkTx = 0;
 
       if (stats.networks) {
-        Object.values(stats.networks).forEach((network: any) => {
+        Object.values(stats.networks).forEach((network: { rx_bytes: number; tx_bytes: number }) => {
           networkRx += network.rx_bytes || 0;
           networkTx += network.tx_bytes || 0;
         });
@@ -76,6 +79,7 @@ export class DockerClient {
         networkTx,
       };
     } catch (error) {
+      this.logger.error('Failed to get container stats:', error);
       // Return default stats if we can't get them
       return {
         cpuPercent: 0,
@@ -88,7 +92,7 @@ export class DockerClient {
     }
   }
 
-  async inspectContainer(containerId: string): Promise<any> {
+  async inspectContainer(containerId: string): Promise<{ State: { Status: string }; Name: string; Image: string; Id: string }> {
     try {
       const container = this.docker.getContainer(containerId);
       return await container.inspect();

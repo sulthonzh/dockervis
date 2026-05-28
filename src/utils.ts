@@ -65,7 +65,6 @@ export function drawProgressBar(percent: number, width: number = 20): string {
 }
 
 export function formatContainerRow(container: ContainerInfo, index: number): string {
-  const statusColor = container.state === 'running' ? 'green' : container.state === 'exited' ? 'red' : 'yellow';
   const statusSymbol = container.state === 'running' ? '●' : container.state === 'exited' ? '○' : '◐';
 
   return `${index.toString().padStart(2, ' ')} ${statusSymbol} ${container.name.padEnd(20)} ${container.image.substring(0, 20).padEnd(20)} ${container.state.padEnd(10)}`;

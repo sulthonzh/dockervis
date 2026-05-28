@@ -27,6 +27,7 @@ export interface DockerOptions {
 
 export interface DashboardConfig {
   refreshInterval: number;
+  sortBy?: string;
   filterState?: string;
   includeContainers?: string[];
   excludeContainers?: string[];
