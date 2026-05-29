@@ -50,3 +50,43 @@ export interface StatsSnapshot {
   timestamp: number;
   containers: ContainerInfo[];
 }
+
+export interface LogOptions {
+  tail?: number;
+  timestamps?: boolean;
+  since?: number;
+  until?: number;
+  follow?: boolean;
+}
+
+export interface LogEntry {
+  timestamp?: string;
+  stream: 'stdout' | 'stderr';
+  content: string;
+}
+
+export interface SystemInfo {
+  cpu: {
+    usage: number;
+    cores: number;
+  };
+  memory: {
+    total: number;
+    used: number;
+    available: number;
+    percent: number;
+  };
+  network: {
+    rx: number;
+    tx: number;
+  };
+}
+
+export interface ImageInfo {
+  id: string;
+  repository: string;
+  tag: string;
+  size: number;
+  created: number;
+  virtualSize: number;
+}

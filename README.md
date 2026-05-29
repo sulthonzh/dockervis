@@ -76,6 +76,10 @@ dockervis --compact
 | `s` | Stop selected container |
 | `R` | Restart selected container |
 | `d` | Delete selected container (exited only) |
+| `l` | View container logs |
+| `t` | Toggle system information |
+| `i` | Toggle containers/images view |
+| `p` | Pull selected image (images view only) |
 
 ## Configuration
 
@@ -124,16 +128,33 @@ Then log out and back in for the changes to take effect.
 q: Quit | r: Refresh | s: Stop | R: Restart | d: Delete
 ```
 
+## Features
+
+### Core Features
+- **Real-time monitoring** - Live container stats with CPU, memory, and network usage
+- **Interactive filtering** - Filter by state, name, or custom criteria
+- **Keyboard shortcuts** - Quick actions for common operations (stop, restart, delete)
+- **Resource visualization** - ASCII art graphs and progress bars
+- **Export capabilities** - Export metrics to JSON or CSV for analysis
+- **Auto-detection** - Automatically detects Docker socket location
+- **Lightweight** - Monitoring-focused, unlike feature-heavy alternatives
+
+### Advanced Features
+- **Container logs viewer** - View real-time container logs with timestamps
+- **System monitoring** - View overall system resource usage (CPU, memory, network)
+- **Image management** - List, pull, and remove Docker images
+- **Dual view modes** - Switch between containers and images views
+
 ## Comparison with Alternatives
 
 | Tool | Language | Focus | TypeScript |
 |------|----------|-------|-----------|
-| dockervis | TypeScript | Monitoring | ✅ Yes |
-| ctop | Go | Monitoring | ❌ No |
+| dockervis | TypeScript | Monitoring + Management | ✅ Yes |
+| ctop | Go | Monitoring only | ❌ No |
 | lazydocker | Go | Full management | ❌ No |
 | docui | Rust | Creation/management | ❌ No |
 
-dockervis provides a focused, monitoring-only alternative that's easier to install and maintain for TypeScript developers.
+dockervis provides a focused, monitoring and management alternative that's easier to install and maintain for TypeScript developers.
 
 ## Development
 
