@@ -104,7 +104,14 @@ export class DockerClient {
   async getContainerLogs(containerId: string, options: { tail?: number; timestamps?: boolean; since?: number; until?: number; follow?: boolean } = {}): Promise<LogEntry[]> {
     try {
       const container = this.docker.getContainer(containerId);
-      const logsOptions: any = {
+      const logsOptions: {
+        stdout: boolean;
+        stderr: boolean;
+        tail?: number;
+        timestamps?: boolean;
+        since?: number;
+        until?: number;
+      } = {
         stdout: true,
         stderr: true,
         tail: options.tail || 100,
@@ -124,24 +131,6 @@ export class DockerClient {
       // For non-follow mode, logs should be a Buffer
       const logText = Buffer.isBuffer(logs) ? logs.toString('utf-8') : '';
       const lines = logText.split('\n').filter((line: string) => line.trim() !== '');
-      
-      return lines.map((line: string) => {
-        if (options.timestamps && line.includes(' ')) {
-          const spaceIndex = line.indexOf(' ');
-          const timestamp = line.substring(0, spaceIndex);
-          const content = line.substring(spaceIndex + 1);
-          return {
-            timestamp,
-            stream: content.startsWith('\x1b[32m') ? 'stdout' : 'stderr',
-            content: content.replace(/\x1b\[[0-9;]*m/g, '') // Remove ANSI color codes
-          };
-        } else {
-          return {
-            stream: line.startsWith('\x1b[32m') ? 'stdout' : 'stderr',
-            content: line.replace(/\x1b\[[0-9;]*m/g, '') // Remove ANSI color codes
-          };
-        }
-      });
       
       return lines.map((line: string) => {
         if (options.timestamps && line.includes(' ')) {
@@ -248,8 +237,6 @@ export class DockerClient {
       
       // Initialize totals
       let totalCpuUsage = 0;
-      let totalMemoryUsage = 0;
-      let totalMemoryLimit = 0;
       let networkRx = 0;
       let networkTx = 0;
       
@@ -265,11 +252,7 @@ export class DockerClient {
           const cpuPercent = systemDelta > 0 ? (cpuDelta / systemDelta) * stats.cpu_stats.online_cpus * 100 : 0;
           totalCpuUsage += cpuPercent;
           
-          // Calculate memory usage
-          const memoryUsage = stats.memory_stats.usage || 0;
-          const memoryLimit = stats.memory_stats.limit || 0;
-          totalMemoryUsage += memoryUsage;
-          totalMemoryLimit += memoryLimit;
+          // Calculate memory usage (not used in current implementation)
           
           // Calculate network stats
           if (stats.networks) {
