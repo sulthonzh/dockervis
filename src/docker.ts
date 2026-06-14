@@ -49,17 +49,14 @@ export class DockerClient {
       const container = this.docker.getContainer(containerId);
       const stats = await container.stats({ stream: false });
 
-      // Calculate CPU percentage
       const cpuDelta = stats.cpu_stats.cpu_usage.total_usage - stats.precpu_stats.cpu_usage.total_usage;
       const systemDelta = stats.cpu_stats.system_cpu_usage - stats.precpu_stats.system_cpu_usage;
       const cpuPercent = systemDelta > 0 ? (cpuDelta / systemDelta) * stats.cpu_stats.online_cpus * 100 : 0;
 
-      // Calculate memory usage
       const memoryUsage = stats.memory_stats.usage || 0;
       const memoryLimit = stats.memory_stats.limit || 0;
       const memoryPercent = memoryLimit > 0 ? (memoryUsage / memoryLimit) * 100 : 0;
 
-      // Calculate network stats
       let networkRx = 0;
       let networkTx = 0;
 
@@ -235,18 +232,15 @@ export class DockerClient {
       // Get container stats to calculate system resource usage
       const containers = await this.docker.listContainers({ all: true });
       
-      // Initialize totals
       let totalCpuUsage = 0;
       let networkRx = 0;
       let networkTx = 0;
       
-      // Get stats for each container
       for (const container of containers) {
         try {
           const containerObj = this.docker.getContainer(container.Id);
           const stats = await containerObj.stats({ stream: false });
           
-          // Calculate CPU usage
           const cpuDelta = stats.cpu_stats.cpu_usage.total_usage - stats.precpu_stats.cpu_usage.total_usage;
           const systemDelta = stats.cpu_stats.system_cpu_usage - stats.precpu_stats.system_cpu_usage;
           const cpuPercent = systemDelta > 0 ? (cpuDelta / systemDelta) * stats.cpu_stats.online_cpus * 100 : 0;
@@ -254,7 +248,6 @@ export class DockerClient {
           
           // Calculate memory usage (not used in current implementation)
           
-          // Calculate network stats
           if (stats.networks) {
             Object.values(stats.networks).forEach((network: { rx_bytes: number; tx_bytes: number }) => {
               networkRx += network.rx_bytes || 0;
@@ -267,7 +260,6 @@ export class DockerClient {
         }
       }
       
-      // Get system info from OS
       const os = await import('os');
       const totalMemory = os.totalmem();
       const freeMemory = os.freemem();

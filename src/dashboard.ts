@@ -13,7 +13,6 @@ export async function startDashboard(client: DockerClient, config: DashboardConf
     fullUnicode: true,
   });
 
-  // Header
   const header = blessed.box({
     top: 0,
     left: 0,
@@ -27,7 +26,6 @@ export async function startDashboard(client: DockerClient, config: DashboardConf
     },
   });
 
-  // Container list
   const containerList = blessed.list({
     top: 3,
     left: 0,
@@ -47,7 +45,6 @@ export async function startDashboard(client: DockerClient, config: DashboardConf
     vi: true,
   });
 
-  // Details panel
   const detailsPanel = blessed.box({
     top: 3,
     left: '60%',
@@ -65,7 +62,6 @@ export async function startDashboard(client: DockerClient, config: DashboardConf
     },
   });
 
-  // Status bar
   const statusBar = blessed.box({
     bottom: 0,
     left: 0,
@@ -95,7 +91,6 @@ export async function startDashboard(client: DockerClient, config: DashboardConf
     try {
       const allContainers = await client.getContainers();
 
-      // Apply filters
       containers = sortContainers(
         filterContainers(allContainers, {
           state: config.filterState,
@@ -104,7 +99,6 @@ export async function startDashboard(client: DockerClient, config: DashboardConf
         })
       );
 
-      // Update list
       const items = containers.map((c) => {
         const statusColor = c.state === 'running' ? '{green-fg}' : c.state === 'exited' ? '{red-fg}' : '{yellow-fg}';
         return `${statusColor}${c.name}{/${statusColor === '{green-fg}' ? 'green-fg' : statusColor === '{red-fg}' ? 'red-fg' : 'yellow-fg'}} (${c.state})`;
@@ -112,7 +106,6 @@ export async function startDashboard(client: DockerClient, config: DashboardConf
 
       containerList.setItems(items);
 
-      // Update details panel
       if (containers.length > 0 && selectedIndex < containers.length) {
         const selected = containers[selectedIndex];
         const details = [
@@ -144,7 +137,6 @@ export async function startDashboard(client: DockerClient, config: DashboardConf
     try {
       images = await client.getImages();
 
-      // Update list
       const items = images.map((img) => {
         const sizeColor = img.size > 100000000 ? '{red-fg}' : img.size > 50000000 ? '{yellow-fg}' : '{green-fg}';
         return `${sizeColor}${img.repository}:{/}${sizeColor === '{red-fg}' ? 'red-fg' : sizeColor === '{yellow-fg}' ? 'yellow-fg' : 'green-fg'}${img.tag}{/${sizeColor === '{red-fg}' ? 'red-fg' : sizeColor === '{yellow-fg}' ? 'yellow-fg' : 'green-fg'}} (${formatBytes(img.size)})`;
@@ -152,7 +144,6 @@ export async function startDashboard(client: DockerClient, config: DashboardConf
 
       containerList.setItems(items);
 
-      // Update details panel
       if (images.length > 0 && selectedIndex < images.length) {
         const selected = images[selectedIndex];
         const details = [
@@ -364,7 +355,6 @@ export async function startDashboard(client: DockerClient, config: DashboardConf
         await updateContainers();
       }
       
-      // Update status bar
       statusBar.setContent(showImages ? 'q: Quit | r: Refresh | d: Delete | p: Pull | i: Containers' : 'q: Quit | r: Refresh | s: Stop | R: Restart | d: Delete | l: Logs | t: System | i: Images');
       screen.render();
     } catch (error) {

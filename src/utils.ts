@@ -47,7 +47,6 @@ export function filterContainers(containers: ContainerInfo[], options: FilterOpt
 }
 
 export function sortContainers(containers: ContainerInfo[]): ContainerInfo[] {
-  // Sort by state (running first), then by name
   return [...containers].sort((a, b) => {
     const aRunning = a.state === 'running' ? 0 : 1;
     const bRunning = b.state === 'running' ? 0 : 1;
