@@ -14,10 +14,8 @@ async function main() {
   try {
     logger.info('Starting dockervis...');
     
-    // Initialize Docker connection
     await dockerManager.initialize();
     
-    // Start the terminal UI
     await terminalUI.start();
     
   } catch (error) {

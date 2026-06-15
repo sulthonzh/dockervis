@@ -1,6 +1,6 @@
 export class Config {
   private refreshInterval = 2000; // 2 seconds
-  private sortBy = 'name'; // Default sort by name
+  private sortBy = 'name';
   private dockerSocketPath = '/var/run/docker.sock';
   private dockerApiVersion = '1.41';
 

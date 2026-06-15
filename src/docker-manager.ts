@@ -27,7 +27,6 @@ export class DockerManager extends DockerClient {
     try {
       const containers = await super.getContainers();
       
-      // Apply status filters if specified
       let filteredContainers = containers;
       if (filters.status && filters.status.length > 0) {
         filteredContainers = containers.filter(container => 
