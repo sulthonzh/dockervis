@@ -64,5 +64,10 @@
   "bugs": {
     "url": "https://github.com/sulthonzh/dockervis/issues"
   },
-  "homepage": "https://github.com/sulthonzh/dockervis#readme"
+  "homepage": "https://github.com/sulthonzh/dockervis#readme",
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ]
 }
