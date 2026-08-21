@@ -33,7 +33,7 @@
   "dependencies": {
     "@eslint/js": "^10.0.0",
     "blessed": "^0.1.81",
-    "chalk": "^4.1.2",
+    "chalk": "^6.0.0",
     "cli-spinner": "^0.2.10",
     "dockerode": "^3.3.5",
     "inquirer": "^9.2.12",
