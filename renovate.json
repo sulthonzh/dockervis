@@ -2,5 +2,14 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "chalk"
+      ],
+      "allowedVersions": "^4",
+      "description": "chalk v5+ is ESM-only; repo uses moduleResolution node10 (TS 6 pin, flag #20 class). Stay on last CJS major."
+    }
   ]
 }
