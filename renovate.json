@@ -10,6 +10,13 @@
       ],
       "allowedVersions": "^4",
       "description": "chalk v5+ is ESM-only; repo uses moduleResolution node10 (TS 6 pin, flag #20 class). Stay on last CJS major."
+    },
+    {
+      "matchPackageNames": [
+        "typescript"
+      ],
+      "allowedVersions": "^6.0.3",
+      "description": "TS7 breaks tsc moduleResolution node10 + peer conflicts with @typescript-eslint <6.1.0 (flag #20 TS7 class, 14th instance). Cap at TS6."
     }
   ]
 }
