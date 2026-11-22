@@ -36,7 +36,7 @@
     "chalk": "^4.1.2",
     "cli-spinner": "^0.2.10",
     "dockerode": "^3.3.5",
-    "inquirer": "^9.2.12",
+    "inquirer": "^14.0.0",
     "typescript-eslint": "^8.60.0"
   },
   "devDependencies": {
